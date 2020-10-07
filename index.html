@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>BlocklyNukkit</title>
+		<link rel="icon" href="favicon.ico">
+		<!-- 新 Bootstrap4 核心 CSS 文件 -->
+		<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+		<!-- jQuery文件 -->
+		<script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+		<!-- bootstrap.bundle.min.js 用于弹窗、提示、下拉菜单，包含了 popper.min.js -->
+		<script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+		<!-- 最新的 Bootstrap4 核心 JavaScript 文件 -->
+		<script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+		<script src="./js/custom/encodingcore.js"></script>		
+		<script src="./js/blockly_compressed.js"></script>
+		<script src="./js/blocks_compressed.js"></script>
+		<script src="./js/msg/js/zh-hans.js"></script>
+		<script src="./js/custom/language.js"></script>
+		<script src="./js/javascript_compressed.js"></script>
+		<script src="./js/custom/myblocks.js"></script>
+		<script src="./js/custom/player.js"></script>
+		<script src="./js/custom/event.js"></script>
+		<script src="./js/appengine/storage.js"></script>
+		<script src="./js/custom/save.js"></script>
+		<script src="./js/custom/pos.js"></script>
+		<script src="./js/custom/window.js"></script>
+		<script src="./js/custom/blockanditem.js"></script>	
+		<script src="./js/custom/inventory.js"></script>
+		<script src="./js/custom/utils.js"></script>
+		<script src="./js/custom/entity.js"></script>
+		<script src="./js/custom/notemusic.js"></script>
+		<script src="./js/custom/particle.js"></script>
+		<script src="./js/SoftKey/vk_loader.js?vk_skin=flat_gray"></script>	
+		<script src="https://cdn.bootcss.com/prism/9000.0.1/prism.min.js"></script>
+		<link href="https://cdn.bootcss.com/prism/9000.0.1/themes/prism.min.css" rel="stylesheet">
+		<link href="https://cdn.bootcss.com/prism/9000.0.1/plugins/line-numbers/prism-line-numbers.min.css" rel="stylesheet">
+		<script src="https://cdn.bootcss.com/prism/9000.0.1/plugins/line-numbers/prism-line-numbers.min.js"></script>
+		
+		<xml xmlns="https://developers.google.com/blockly/xml" id="workspaceBlocks" style="display: none"></xml>
+		
+	</head>
+	<body>
+		<style>
+			#md-large-widget-content hover img {  
+			    box-shadow: 6px 6px 6px rgba(0,0,0,0.3);  
+			}  
+			.ct-coll-item a.ct-coll-thumb:hover img{  
+			    box-shadow: 6px 6px 6px rgba(0,0,0,0.3);  
+			    opacity: 0.9;  
+			}  
+			.linkLabelStyle>.blocklyFlyoutLabelText {
+			  font-style: initial
+			  fill: green;
+			  text-decoration: underline;
+			}
+		</style>
+		<script>
+			document.body.addEventListener('touchmove', function (e) {
+			        e.preventDefault() // 阻止默认的处理方式(阻止下拉滑动的效果)
+			    }, {passive: false}) // passive 参数不能省略，用来兼容ios和android
+		</script>
+		<xml xmlns="https://developers.google.com/blockly/xml" id="toolbox" style="display: none">
+		  <category name="核心">
+			  <category name="逻辑" colour="#5b80a5">
+				<block type="controls_if"></block>
+				<block type="logic_compare">
+				  <field name="OP">EQ</field>
+				</block>
+				<block type="logic_operation">
+				  <field name="OP">AND</field>
+				</block>
+				<block type="logic_negate"></block>
+				<block type="logic_boolean">
+				  <field name="BOOL">TRUE</field>
+				</block>
+				<block type="logic_null"></block>
+				<block type="logic_ternary"></block>
+			  </category>
+			  <category name="循环" colour="#5ba55b">
+				<block type="controls_repeat_ext">
+				  <value name="TIMES">
+					<shadow type="math_number">
+					  <field name="NUM">10</field>
+					</shadow>
+				  </value>
+				</block>
+				<block type="controls_whileUntil">
+				  <field name="MODE">WHILE</field>
+				</block>
+				<block type="controls_for">
+				  <field name="VAR" id="Aln+k@9Z9zT1?Kacr2IN">i</field>
+				  <value name="FROM">
+					<shadow type="math_number">
+					  <field name="NUM">1</field>
+					</shadow>
+				  </value>
+				  <value name="TO">
+					<shadow type="math_number">
+					  <field name="NUM">10</field>
+					</shadow>
+				  </value>
+				  <value name="BY">
+					<shadow type="math_number"> 
+					  <field name="NUM">1</field>
+					</shadow>
+				  </value>
+				</block>
+				<block type="controls_forEach">
+				  <field name="VAR" id="@s%!pm^Q*bqA_Z/OZoWi">j</field>
+				</block>
+				<block type="controls_flow_statements">
+				  <field name="FLOW">BREAK</field>
+				</block>
+			  </category>
+			  <category name="数学" colour="#5b67a5">
+				<block type="math_number">
+				  <field name="NUM">0</field>
+				</block>
+				<block type="math_arithmetic">
+				  <field name="OP">ADD</field>
+				  <value name="A">
+					<shadow type="math_number">
+					  <field name="NUM">1</field>
+					</shadow>
+				  </value>
+				  <value name="B">
+					<shadow type="math_number">
+					  <field name="NUM">1</field>
+					</shadow>
+				  </value>
+				</block>
+				<block type="math_single">
+				  <field name="OP">ROOT</field>
+				  <value name="NUM">
+					<shadow type="math_number">
+					  <field name="NUM">9</field>
+					</shadow>
+				  </value>
+				</block>
+				<block type="math_trig">
+				  <field name="OP">SIN</field>
+				  <value name="NUM">
+					<shadow type="math_number">
+					  <field name="NUM">45</field>
+					</shadow>
+				  </value>
+				</block>
+				<block type="math_constant">
+				  <field name="CONSTANT">PI</field>
+				</block>
+				<block type="math_number_property">
+				  <mutation divisor_input="false"></mutation>
+				  <field name="PROPERTY">EVEN</field>
+				  <value name="NUMBER_TO_CHECK">
+					<shadow type="math_number">
+					  <field name="NUM">0</field>
+					</shadow>
+				  </value>
+				</block>
+				<block type="math_round">
+				  <field name="OP">ROUND</field>
+				  <value name="NUM">
+					<shadow type="math_number">
+					  <field name="NUM">3.1</field>
+					</shadow>
+				  </value>
+				</block>
+				<block type="math_on_list">
+				  <mutation op="SUM"></mutation>
+				  <field name="OP">SUM</field>
+				</block>
+				<block type="math_modulo">
+				  <value name="DIVIDEND">
+					<shadow type="math_number">
+					  <field name="NUM">64</field>
+					</shadow>
+				  </value>
+				  <value name="DIVISOR">
+					<shadow type="math_number">
+					  <field name="NUM">10</field>
+					</shadow>
+				  </value>
+				</block>
+				<block type="math_constrain">
+				  <value name="VALUE">
+					<shadow type="math_number">
+					  <field name="NUM">50</field>
+					</shadow>
+				  </value>
+				  <value name="LOW">
+					<shadow type="math_number">
+					  <field name="NUM">1</field>
+					</shadow>
+				  </value>
+				  <value name="HIGH">
+					<shadow type="math_number">
+					  <field name="NUM">100</field>
+					</shadow>
+				  </value>
+				</block>
+				<block type="math_random_int">
+				  <value name="FROM">
+					<shadow type="math_number">
+					  <field name="NUM">1</field>
+					</shadow>
+				  </value>
+				  <value name="TO">
+					<shadow type="math_number">
+					  <field name="NUM">100</field>
+					</shadow>
+				  </value>
+				</block>
+				<block type="math_random_float"></block>
+			  </category>
+			  <category name="字符串" colour="#5ba58c">
+				<block type="text">
+				  <field name="TEXT"></field>
+				</block>
+				<block type="text_join">
+				  <mutation items="2"></mutation>
+				</block>
+				<block type="text_append">
+				  <field name="VAR" id="bf`|A*kgw^p|uBRP.A``">item</field>
+				  <value name="TEXT">
+					<shadow type="text">
+					  <field name="TEXT"></field>
+					</shadow>
+				  </value>
+				</block>
+				<block type="text_length">
+				  <value name="VALUE">
+					<shadow type="text">
+					  <field name="TEXT">abc</field>
+					</shadow>
+				  </value>
+				</block>
+				<block type="text_isEmpty">
+				  <value name="VALUE">
+					<shadow type="text">
+					  <field name="TEXT"></field>
+					</shadow>
+				  </value>
+				</block>
+				<block type="text_indexOf">
+				  <field name="END">FIRST</field>
+				  <value name="VALUE">
+					<block type="variables_get">
+					  <field name="VAR" id="Gb#Ms]?-=j?vKWqKlI~2">text</field>
+					</block>
+				  </value>
+				  <value name="FIND">
+					<shadow type="text">
+					  <field name="TEXT">abc</field>
+					</shadow>
+				  </value>
+				</block>
+				<block type="text_charAt">
+				  <mutation at="true"></mutation>
+				  <field name="WHERE">FROM_START</field>
+				  <value name="VALUE">
+					<block type="variables_get">
+					  <field name="VAR" id="Gb#Ms]?-=j?vKWqKlI~2">text</field>
+					</block>
+				  </value>
+				</block>
+				<block type="text_getSubstring">
+				  <mutation at1="true" at2="true"></mutation>
+				  <field name="WHERE1">FROM_START</field>
+				  <field name="WHERE2">FROM_START</field>
+				  <value name="STRING">
+					<block type="variables_get">
+					  <field name="VAR" id="Gb#Ms]?-=j?vKWqKlI~2">text</field>
+					</block>
+				  </value>
+				</block>
+				<block type="text_changeCase">
+				  <field name="CASE">UPPERCASE</field>
+				  <value name="TEXT">
+					<shadow type="text">
+					  <field name="TEXT">abc</field>
+					</shadow>
+				  </value>
+				</block>
+				<block type="text_trim">
+				  <field name="MODE">BOTH</field>
+				  <value name="TEXT">
+					<shadow type="text">
+					  <field name="TEXT">abc</field>
+					</shadow>
+				  </value>
+				</block>
+			  </category>
+			  <category name="列表" colour="#745ba5">
+				<block type="lists_create_with">
+				  <mutation items="0"></mutation>
+				</block>
+				<block type="lists_create_with">
+				  <mutation items="3"></mutation>
+				</block>
+				<block type="lists_repeat">
+				  <value name="NUM">
+					<shadow type="math_number">
+					  <field name="NUM">5</field>
+					</shadow>
+				  </value>
+				</block>
+				<block type="lists_length"></block>
+				<block type="lists_isEmpty"></block>
+				<block type="lists_indexOf">
+				  <field name="END">FIRST</field>
+				  <value name="VALUE">
+					<block type="variables_get">
+					  <field name="VAR" id="XP5X4NPwZ|Q=lk)tPiH(">list</field>
+					</block>
+				  </value>
+				</block>
+				<block type="lists_getIndex">
+				  <mutation statement="false" at="true"></mutation>
+				  <field name="MODE">GET</field>
+				  <field name="WHERE">FROM_START</field>
+				  <value name="VALUE">
+					<block type="variables_get">
+					  <field name="VAR" id="XP5X4NPwZ|Q=lk)tPiH(">list</field>
+					</block>
+				  </value>
+				</block>
+				<block type="lists_setIndex">
+				  <mutation at="true"></mutation>
+				  <field name="MODE">SET</field>
+				  <field name="WHERE">FROM_START</field>
+				  <value name="LIST">
+					<block type="variables_get">
+					  <field name="VAR" id="XP5X4NPwZ|Q=lk)tPiH(">list</field>
+					</block>
+				  </value>
+				</block>
+				<block type="lists_getSublist">
+				  <mutation at1="true" at2="true"></mutation>
+				  <field name="WHERE1">FROM_START</field>
+				  <field name="WHERE2">FROM_START</field>
+				  <value name="LIST">
+					<block type="variables_get">
+					  <field name="VAR" id="XP5X4NPwZ|Q=lk)tPiH(">list</field>
+					</block>
+				  </value>
+				</block>
+				<block type="lists_split">
+				  <mutation mode="SPLIT"></mutation>
+				  <field name="MODE">SPLIT</field>
+				  <value name="DELIM">
+					<shadow type="text">
+					  <field name="TEXT">,</field>
+					</shadow>
+				  </value>
+				</block>
+				<block type="lists_sort">
+				  <field name="TYPE">NUMERIC</field>
+				  <field name="DIRECTION">1</field>
+				</block>
+			  </category>
+			</category>
+		  <category name="动态">
+			  <category name="变量" colour="#a55b80" custom="VARIABLE"></category>
+			  <category name="函数" colour="#995ba5" custom="PROCEDURE"></category>
+		  </category>
+		  <category name="插件">
+			  <category name="BN插件" colour="#9fa55b">
+				  <block type="bnmanager"></block>
+				  <block type="bn_register_command"><value name="CALLBACK"><block type="bn_getfunction"></block></value></block>
+				  <block type="bn_register_delay"></block>
+				  <block type="bn_register_repeat20"></block>
+				  <block type="bn_getfunction"></block>
+				  <block type="bn_config"></block>
+				  <block type="bn_set_config"></block>
+				  <block type="bn_get_config"></block>
+				  <block type="bn_getKeys_config"></block>
+				  <block type="bn_save_config"></block>
+				  <block type="bn_forEachBlockInArea"><value name="CALLBACK"><block type="bn_getfunction"></block></value></block>
+				  <block type="bn_forLinkedBlock"><value name="CALLBACK"><block type="bn_getfunction"></block></value></block>
+			  </category>
+			  <category name="Nukkit" colour="#a5745b">
+				  <block type="nkserver"></block>
+				  <block type="nklogger"></block>
+				  <block type="nkgetConsoleSender"></block>
+				  <block type="nklogger_info"></block>
+				  <block type="nklogger_warning"></block>
+				  <block type="onlineplayers"></block>
+				  <block type="nk_getname"></block>
+				  <block type="nkdispatchcommand"></block>
+				  <block type="nkevent_privatecall">
+					  <value name="VALUE"><block type="bn_getfunction"></block></value>
+					  <value name="OUT"><block type="bn_getfunction"></block></value>
+				  </block>
+				  <block type="nkputEasy"></block>
+				  <block type="nkgetEasy"></block>
+			  </category>
+			  <category name="玩家" colour=180>
+				  <block type="player_getbyname"></block>
+				  <block type="player_sendMessage"></block>
+				  <block type="player_playedbefore"></block>
+				  <block type="player_sendPopup"></block>
+				  <block type="player_sendActionBar"></block>
+				  <block type="player_setSubtitle"></block>
+				  <block type="player_sendTitle"></block>
+				  <block type="player_clearTitle"></block>
+				  <block type="player_gethealth"></block>
+				  <block type="player_sethealth"></block>
+				  <block type="player_setmaxhealth"></block>
+				  <block type="player_getposition"></block>
+				  <block type="player_teleport"></block>
+				  <block type="player_buildskin"></block>
+				  <block type="player_buildskinfor"></block>
+				  <block type="player_getmoney"></block>
+				  <block type="player_opmoney"><field name="OP">set</field></block>
+				  <block type="player_getItemInHand"></block>
+				  <block type="player_setItemInHand"></block>
+				  <block type="player_PlayerIsOP"></block>
+				  <block type="player_addItemToPlayer"></block>
+				  <block type="player_hasItemToPlayer"></block>
+				  <block type="player_removeItemToPlayer"></block>
+				  <block type="player_getPlayerInv"></block>
+				  <block type="player_setPlayerInv"></block>
+				  <block type="player_kickPlayer"></block>
+			  </category>
+			  <category name="事件" colour=10>
+				  <block type="event_setCancelled"></block>
+				  <block type="event_getplayer"></block>
+				  <block type="event_getjoinmessage"></block>
+				  <block type="event_setJoinMessage"></block>
+				  <block type="event_getchatmessage"></block>
+				  <block type="event_setchatmessage"></block>
+				  <block type="event_getentity"></block>
+				  <block type="event_getdeathmessage"></block>
+				  <block type="event_setkeepexperience"></block>
+				  <block type="event_setkeepinventory"></block>
+				  <block type="event_setdeathmessage"></block>
+				  <block type="event_window_simple_getEventResponseText"></block>
+				  <block type="event_window_modal_getEventResponseModal"></block>
+				  <block type="event_window_custom_getEventCustomVar"><field name="MODE">input</field></block>
+				  <block type="event_getblock"></block>
+				  <block type="event_getitem"></block>
+				  <block type="event_getSlot"></block>
+				  <block type="event_getInventory"></block>
+				  <block type="event_getradio"></block>
+				  <block type="event_getDamager"></block>
+				  <block type="event_getDamage"></block>
+				  <block type="event_getKnockBack"></block>
+			  </category>
+			  <category name="位置" colour=133>
+				  <block type="pos_getlevelbyname"></block>
+				  <block type="pos_formobject"></block>
+				  <block type="pos_getx"></block>
+				  <block type="pos_gety"></block>
+				  <block type="pos_getz"></block>
+				  <block type="pos_getlevel"></block>
+				  <block type="pos_setlevel"></block>
+				  <block type="pos_setxyz"></block>
+				  <block type="pos_getlevelname"></block>
+				  <block type="pos_getsafespawn"></block>
+				  <block type="pos_setspawnlocation"></block>
+				  <block type="pos_makeSound"></block>
+				  <block type="pos_makeExpBall"></block>
+				  <block type="pos_makeDropItem"></block>
+				  <block type="pos_getBlock"></block>
+				  <block type="pos_getLevelEntities"></block>
+				  <block type="pos_getLevelPlayers"></block>
+				  <block type="pos_getIsSunny"></block>
+				  <block type="pos_isDay"></block>
+				  <block type="pos_setLevelWeather"></block>
+				  <block type="pos_setBlock"></block>
+				  <block type="pos_getBlockInv"></block>
+				  <block type="pos_setBlockInv"></block>
+				  <block type="pos_getDropItems"></block>
+				  <block type="pos_getEntities"></block>
+				  <block type="pos_getEntityByLevelAndID"></block>
+				  <block type="pos_getLevelFloatingText"></block>
+			  </category>
+			  <category name="创世" colour=133>
+				  <block type="pos_genLevel"></block>
+				  <block type="pos_loadlevel"></block>
+				  <block type="pos_getServerLevels"></block>
+				  <block type="pos_setSkyLandGenerator">
+					  <value name="COAL"><block type="pos_4num"></block></value>
+					  <value name="IRON"><block type="pos_4num"></block></value>
+					  <value name="REDSTONE"><block type="pos_4num"></block></value>
+					  <value name="LAPIS"><block type="pos_4num"></block></value>
+					  <value name="GOLD"><block type="pos_4num"></block></value>
+					  <value name="DIAMOND"><block type="pos_4num"></block></value>
+					  <value name="DIRT"><block type="pos_4num"></block></value>
+					  <value name="GRAVEL"><block type="pos_4num"></block></value>
+					  <value name="GRANITE"><block type="pos_4num"></block></value>
+					  <value name="DIORITE"><block type="pos_4num"></block></value>
+					  <value name="ANDESITE"><block type="pos_4num"></block></value>
+				  </block>
+			  </category>
+			  <category name="窗口" colour=240>
+				  <block type="window_getSimpleWindowBuilder"></block>
+				  <block type="window_buildButton"></block>
+				  <block type="window_showToPlayer"><value name="CALLBACK"><block type="bn_getfunction"></block></value></block>
+				  <block type="window_getModalWindowBuilder"></block>
+				  <block type="window_setModalButtons"></block>
+				  <block type="window_getCustomWindowBuilder"></block>
+				  <block type="window_buildLabel"></block>
+				  <block type="window_buildInput"></block>
+				  <block type="window_buildInput2"></block>
+				  <block type="window_buildToggle"></block>
+				  <block type="window_buildDropdown"></block>
+				  <block type="window_updateAllScoreBoard"></block>
+				  <block type="window_updateOneScoreBoard"></block>
+				  <block type="window_STDbuttons"></block>
+			  </category>
+			  <category name="方块物品" colour=47>
+				  <block type="bi_buildBlock"></block>
+				  <block type="bi_buildItem"></block>
+				  <block type="bi_buildItemFromBlock"></block>
+				  <block type="bi_block_getId"></block>
+				  <block type="bi_block_getDamage"></block>
+				  <block type="bi_setItem"></block>
+				  <block type="bi_getItemInfo"></block>
+				  <block type="bi_getBlockInfo"></block>
+				  <block type="bi_getItemLore"></block>
+				  <block type="bi_setItemLore"></block>
+				  <block type="bi_addShapelessCraft"></block>
+				  <block type="bi_addShapedCraft">
+					<value name="SHAPE">
+					  <block type="bi_shapearray">
+					    <value name="A"><block type="bi_shapestr"></block></value>
+						<value name="B"><block type="bi_shapestr"></block></value>
+						<value name="C"><block type="bi_shapestr"></block></value>
+					  </block>
+					</value>
+					<value name="APPEND">
+					  <shadow type="lists_create_with">
+					    <mutation items="0"></mutation>
+					  </shadow>
+					</value>
+				  </block>
+				  <block type="bi_addItemEnchant"></block>
+				  <block type="bi_isSame"></block>
+				  <block type="bi_addFurnaceCraft"></block>
+				  <block type="bi_BNCraftForPlayer"></block>
+				  <block type="bi_addBNCraft">
+				  	<value name="INPUT"><shadow type="lists_create_with"><mutation items="1"></mutation></shadow></value>
+				  	<value name="OUTPUT"><shadow type="lists_create_with"><mutation items="1"></mutation></shadow></value>
+				  </block>
+				  <block type="bi_addToCreativeBar"></block> 
+				  <block type="bi_getNBTString"></block>
+				  <block type="bi_putinNBTString"></block>
+			  </category>
+			  <category name="物品栏" colour=290>
+				<block type="inv_addInv"></block>
+				<block type="inv_showFakeInv"></block>
+				<block type="inv_editInv"></block>
+				<block type="inv_editInvBySlot"></block>
+				<block type="inv_containsItemInInv"></block>
+				<block type="inv_addItemToInv"></block>
+				<block type="inv_removeItemFromInv"></block>
+				<block type="inv_getItemsInInv"></block>
+			  </category>
+			  <category name="生物" colour=248>
+				<block type="entity_playertoentity"></block>
+				<block type="entity_getDropItemStack"></block>
+				<block type="entity_removeEntity"></block>
+				<block type="entity_setEntityName"></block>
+				<block type="entity_setEntityNameTagAlwaysVisable"></block>
+				<block type="entity_setEntityHealth"></block>
+				<block type="entity_getEntityHealth"></block>
+				<block type="entity_clearEntityEffect"></block>
+				<block type="entity_addEntityEffect"></block>
+				<block type="entity_getEntityID"></block>
+				<block type="entity_getEntityLevel"></block>
+				<block type="entity_getEntityName"></block>
+				<block type="entity_getEntityPosition"></block>
+				<block type="entity_setEntityPosition"></block>
+				<block type="entity_buildFloatingText"><value name="CALL"><block type="bn_getfunction"></block></value></block>
+				<block type="entity_startDisplayFloatingText"></block>
+				<block type="entity_BNdeafultFloatingTextCallBack"></block>
+				<block type="entity_getEntityEffect"></block>
+				<block type="entity_getEffectINFO"></block>
+			  </category>
+			  <category name="粒子" colour=0>
+				  <label text="粒子id,颜色码,形状码请去bn文档查看"></label>
+				  <label text="https://docs.qq.com/doc/DRkRpS0xmV2ZJbGdi" web-class="linkLabelStyle"></label>
+				  <block type="par_drawCircle"></block>
+				  <block type="par_drawLine"></block>
+				  <block type="par_drawFireWork"></block>
+				  <block type="par_drawBlockBreak"></block>
+				  <block type="par_drawParticleFactoryMcFunction"></block>
+			  </category>
+		  </category>
+		  <category name="拓展">
+			  <category name="实用工具" colour=97>
+				  <label text="请注意,此模块处于测试中"></label>
+				  <label text="我们不保证这些块一定正常工作"></label>
+				  <label text="如有问题,请随时联系我们"></label>
+				  <block type="utils_buildPositionfromPlayer"></block>
+				  <block type="utils_buildPositionfromBlock"></block>
+				  <block type="utils_buildPositionfromEntity"></block>
+				  <label text="数据库功能目前不稳定,慎用"></label>
+				  <block type="utils_database_databaseOpen"></block>
+				  <block type="utils_database_databaseUpdate"></block>
+				  <block type="utils_database_databaseQuery"></block>
+				  <label text="设置自定义服务器网站placeholder"></label>
+				  <block type="utils_setHTMLPlaceholder"></block>
+				  <label text="这些是一bn联合第三方API提供的服务"></label>
+				  <block type="utils_checkIsBear"></block>
+				  <block type="utils_getPlayerArea"></block>
+				  <label text="GET的数据将追加在url?后,POST类型会放在body里面"></label>
+				  <block type="utils_httpRequest"></block>
+			  </category>
+			  <category name="起床战争" colour=35>
+				  <label text="Sorry,GameSDK for Bedwars"></label>
+				  <label text="is not avilable now."></label>
+			  </category>
+			  <category name="红石音乐" colour=168>
+				  <label text="功能测试中,可能不稳定"></label>
+				  <block type="notemusic_getSongFromFile"></block>
+				  <block type="notemusic_getSongInfo"></block>
+				  <block type="notemusic_buildRadio"></block>
+				  <block type="notemusic_makePlayerToRadio"></block>
+				  <block type="notemusic_getPlayerInRadio"></block>
+				  <block type="notemusic_setRadioStatus"></block>
+				  <block type="notemusic_getSongInRadio"></block>
+			  </category>
+		  </category>
+		  
+		</xml>
+		<div style="width:98vw;height:98vh;display:inline-block;" id="blocklyArea">
+			<div id="blocklyDiv" style="position: absolute;width: 78vw;height: 98vh;transform: translateZ(0);"></div>
+			<div style="position: absolute;width: 20vw;height: 98vh;left:78vw">
+				<div class="ct-coll-item" style="width: 19.9vw;display:inline-block;height: 5.519vw;">  
+					<a class="ct-coll-thumb" style="width: 100%;height: 100%;" href="#">  
+						<img src="BlocklyNukkit.png" style="width: 100%;height: 100%;" data-toggle="modal" data-target="#settingsmodal">
+					</a>  
+				</div>  
+				
+				<div class="alert alert-success alert-dismissible fade show" style="z-index: 1;">
+					<button type="button" class="close" data-dismiss="alert">&times;</button>
+					<strong>BlocklyNukkit.jar最新版是1.2.6(5/6更新)</strong>
+				</div>
+				
+				<div style="width: 100%; position: absolute; top: 5.519vw ; left: 0 ; bottom: 0;">
+					<pre style="width: 19.9vw;height: 98vh-5.519vw;height: 100%;font-weight: bold;"><code class="language-javascript" id="jspreview" style="word-wrap:break-word;word-break:break-all;"></code></pre>	
+				</div>
+			</div>
+		</div>
+		<div class="modal fade" id="settingsmodal">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h4 class="modal-title">功能</h4>
+		        <button type="button" class="close" data-dismiss="modal">&times;</button>
+		      </div>
+		      <div class="modal-body">
+				  <div class="row">
+					<div class="col"><button type="button" class="btn btn-outline-primary" id="downjar">下载插件</button></div>
+				    <div class="col"><button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#savefile">保存源码</button></div>
+				    <div class="col"><button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#jscloud">云端同步</button></div>
+				    <div class="col"><button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#toxml">导出项目</button></div>
+				  </div>
+					<h1></h1>
+				  <div class="row">
+				    <div class="col"><button type="button" class="btn btn-outline-primary" id="downpre">下载前置</button></div>
+					<div class="col"><button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#importfile">导入项目</button></div>
+				    <div class="col"><button type="button" class="btn btn-outline-primary" id="newpj">新建项目</button></div>
+				    <div class="col"><button type="button" class="btn btn-outline-primary" onclick="window.open('https://docs.qq.com/doc/DRkRpS0xmV2ZJbGdi')">打开教程</button></div>
+				  </div>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+		      </div>
+		 
+		    </div>
+		  </div>
+		</div>
+		<div class="modal fade" id="importfile">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h4 class="modal-title">导入项目</h4>
+		        <button type="button" class="close" data-dismiss="modal">&times;</button>
+		      </div>
+		      <div class="modal-body">
+				<div class="container mt-3">
+				  <h2>导入本地项目</h2>
+				  <div class="col"><input type="file" name="file" class="btn btn-outline-primary" id="importxml"></input></div>
+				  
+				</div>
+		      </div>
+		      <div class="modal-footer">
+				<button type="button" class="btn btn-outline-primary" id="showxml">确认导入</button>
+		        <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+		      </div>
+		 
+		    </div>
+		  </div>
+		</div>
+		<div class="modal fade" id="savefile">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h4 class="modal-title">保存源码</h4>
+		        <button type="button" class="close" data-dismiss="modal">&times;</button>
+		      </div>
+		      <div class="modal-body">
+				<div class="container mt-3">
+				  <h2>保存JavaScript源码到本地</h2>
+				  <p id="hex1">在输入框输入欲保存的文件名，不需要输入.js文件后缀。</p>
+				  <form>
+				    <label for="demo">请输入您的文件名:</label>
+				    <div class="input-group mb-3">
+				      <input type="text" class="form-control" placeholder="请输入文件名，不需要文件后缀。例如输入'myjs'" id="save">
+				      <div class="input-group-append">
+				        <button type="submit" class="btn btn-primary" onclick="pcsave();return false;">保存!</button>
+				      </div>
+				    </div>
+				  </form>
+				</div>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+		      </div>
+		 
+		    </div>
+		  </div>
+		</div>
+		<div class="modal fade" id="jscloud">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h4 class="modal-title">云端同步</h4>
+		        <button type="button" class="close" data-dismiss="modal">&times;</button>
+		      </div>
+		      <div class="modal-body">
+				<div class="container mt-3">
+				  <h2>同步JavaScript脚本到云端</h2>
+				  <p id="hex">在输入框输入欲同步的文件名，不需要输入.js文件后缀。</p>
+				  <form>
+				    <label for="demo">请输入您的文件名:</label>
+				    <div class="input-group mb-3">
+				      <input type="text" class="form-control" placeholder="请输入文件名，不需要文件后缀。例如输入'myjs'" id="cloudsave">
+				      <div class="input-group-append">
+				        <button type="submit" class="btn btn-primary" onclick="jsclouds();return false;">同步!</button>
+				      </div>
+				    </div>
+				  </form>
+				</div>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+		      </div>
+		 
+		    </div>
+		  </div>
+		</div>		
+		<div class="modal fade" id="jswjm1">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h4 class="modal-title">同步成功</h4>
+		        <button type="button" class="close" data-dismiss="modal">&times;</button>
+		      </div>
+		      <div class="modal-body">
+				<div class="container mt-3">
+				  <h2>您的文件名为：</h2>
+				  <h2 id="jswjm"></h2>
+				</div>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+		      </div>
+		 
+		    </div>
+		  </div>
+		</div>			
+
+		<div class="modal fade" id="toxml">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h4 class="modal-title">导出项目</h4>
+		        <button type="button" class="close" data-dismiss="modal">&times;</button>
+		      </div>
+		      <div class="modal-body">
+				<div class="container mt-3">
+				  <h2>导出JavaScript项目到本地以便下次编辑</h2>
+				  <p id="hex2">在输入框输入欲同步的文件名，不需要输入文件后缀。</p>
+				  <form>
+				    <label for="demo">请输入您的文件名:</label>
+				    <div class="input-group mb-3">
+				      <input type="text" class="form-control" placeholder="请输入文件名，不需要文件后缀。例如输入'myjs'" id="toxmltext">
+				      <div class="input-group-append">
+				        <button type="submit" class="btn btn-primary" onclick="toxmldc();return false;">导出!</button>
+				      </div>
+				    </div>
+				  </form>
+				</div>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+		      </div>
+		 
+		    </div>
+		  </div>
+		</div>		
+		<div class="modal fade" id="jswjm2">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h4 class="modal-title">导出成功</h4>
+		        <button type="button" class="close" data-dismiss="modal">&times;</button>
+		      </div>
+		      <div class="modal-body">
+				<div class="container mt-3">
+				  <h2>您的项目文件名为：</h2>
+				  <h2 id="jswjm3"></h2>
+				</div>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+		      </div>
+		 
+		    </div>
+		  </div>
+		</div>			
+		<script>
+			window.setInterval("checkbaseobj()",5000)
+			
+			/* TODO: Change toolbox XML ID if necessary. Can export toolbox XML from Workspace Factory. */
+			var toolbox = document.getElementById("toolbox");
+			
+			var options = { 
+				toolbox : toolbox, 
+				collapse : true, 
+				comments : true, 
+				disable : true, 
+				maxBlocks : Infinity, 
+				trashcan : true, 
+				horizontalLayout : false, 
+				toolboxPosition : 'start', 
+				css : true, 
+				media : './js/media/', 
+				rtl : false, 
+				scrollbars : true, 
+				sounds : true, 
+				oneBasedIndex : true, 
+				zoom : {
+					controls : true, 
+					wheel : true, 
+					startScale : 1, 
+					maxScale : 3, 
+					minScale : 0.3, 
+					scaleSpeed : 1.2
+				}
+			};
+			
+			/* Inject your workspace */ 
+			var workspace = Blockly.inject('blocklyDiv', options);
+			
+			/* Load Workspace Blocks from XML to workspace. Remove all code below if no blocks to load */
+			
+			/* TODO: Change workspace blocks XML ID if necessary. Can export workspace blocks XML from Workspace Factory. */
+			var workspaceBlocks = document.getElementById("workspaceBlocks"); 
+			
+			/* Load blocks to workspace. */
+			Blockly.Xml.domToWorkspace(workspaceBlocks, workspace);
+			//
+			window.setTimeout(BlocklyStorage.restoreBlocks, 0);
+			BlocklyStorage.backupOnUnload();
+			//
+			function myUpdateFunction(event) {
+			  var code = Blockly.JavaScript.workspaceToCode(workspace);
+			  document.getElementById('jspreview').innerHTML = code;
+			  Prism.highlightElement(document.getElementById("jspreview"))
+			  $('pre').addClass("line-numbers").css("white-space", "pre-wrap");
+			}
+			workspace.addChangeListener(myUpdateFunction);
+			
+			function checkbaseobj(){
+			  var code = document.getElementById('jspreview').innerText;
+			  var firstline = code.split("\n")[0];
+			  var baseobj = ["server","plugin","logger","manager","blockitem","algorithm","inventory","world","entity","database","notemusic","window","Java"];
+			  for(var i=0;i<baseobj.length-1;i++){
+				  if(firstline.indexOf(" "+baseobj[i]+",")!=-1){
+					  alert("您的变量中含有与基对象重名的变量"+baseobj[i]+"\n这会使得解释器崩溃,请您及时修改!")
+					  break;
+				  }
+			  }
+			}
+			
+		</script>
+		<script>
+		var jsnum1;
+		var jsnum3;
+			$(function () {
+				$("input[id='save']").click(function () {
+				loadKeyboard(this, false);
+				});
+				$("input[id='cloudsave']").click(function () {
+				loadKeyboard(this, false);
+				});
+				$("input[id='toxmltext']").click(function () {
+				loadKeyboard(this, false);
+				});
+				
+			});
+			var $showxml = $("#showxml");
+			$showxml.click(function(){
+				var reader = new FileReader();
+				    reader.onload = function() 
+				    {
+				        var str = this.result
+						if(str!=undefined&&str.length>=10){
+						console.log(str);
+						var xml = Blockly.Xml.textToDom(str);
+						Blockly.Xml.domToWorkspace(xml, workspace);
+					}
+				    }
+				    var f = document.getElementById("importxml").files[0];
+				    reader.readAsText(f);
+					
+			})
+			jQuery.support.cors = true;
+			function toxmldc(){
+				var xml = Blockly.Xml.workspaceToDom(workspace);
+				var xml_text = Blockly.Xml.domToText(xml);
+				var xmlname = $("#toxmltext").val();
+				if(xmlname!=null&&xmlname!=""&&xmlname!="null"){
+				$.ajax({
+					type : "POST",
+					crossDomain: true,
+					contentType: "Content-Type:application/x-www-form-urlencoded;charset=UTF-8",
+					url : "https://service-ph7gsebv-1259395953.bj.apigw.tencentcs.com/release/BlocklyNukkitCloud",
+					data : xmlname+".bn&&&"+xml_text,
+					success : function(result) {
+						var jsnum4 = result.split(";")[1];
+						jsnum3 = jsnum4.split(":")[1];
+						$('#jswjm2').modal('show');
+						var $eleForm = $("<form method='get'></form>");
+						$eleForm.attr("action","https://blocklynukkitxml-1259395953.cos.ap-beijing.myqcloud.com/"+xmlname+".bn");
+						$(document.body).append($eleForm);
+						$eleForm.submit();
+					},
+					error : function(e){
+					    console.log(e.status);
+					    console.log(e.responseText);
+					}
+				});}
+			}
+			$('#jswjm2').on('show.bs.modal', function () {
+				$('#jswjm3').text(jsnum3);
+			})
+			var $downj = $("#downjar");
+			$downj.click(function(){
+				var $eleForm = $("<form method='get'></form>");
+				$eleForm.attr("action","https://gitee.com/Kingdom_of_dragon/BlocklyNukkit/raw/master/BlocklyNukkit.jar");
+				$(document.body).append($eleForm);
+				$eleForm.submit();
+			});
+			var $downj = $("#downpre");
+			$downj.click(function(){
+				var $eleForm = $("<form method='get'></form>");
+				$eleForm.attr("action","https://gitee.com/Kingdom_of_dragon/BlocklyNukkit/raw/master/pre/ScoreboardAPI-1.3-SNAPSHOT.jar");
+				$(document.body).append($eleForm);
+				$eleForm.submit();
+			});
+			var $newpj = $("#newpj");
+			$newpj.click(function(){
+					$("#jspreview").html("");
+					$(".blocklyBlockCanvas").empty();
+					workspace.clear()
+			});
+			function jsclouds(){
+				var jsname = $("#cloudsave").val()
+				if(jsname!=null&&jsname!=""&&jsname!="null"){
+				$.ajax({
+					type : "POST",
+					crossDomain: true,
+					contentType: "Content-Type:application/x-www-form-urlencoded;charset=UTF-8",
+					url : "https://service-ph7gsebv-1259395953.bj.apigw.tencentcs.com/release/BlocklyNukkitCloud",
+					data : jsname+".js&&&"+document.getElementById("jspreview").innerText,
+					success : function(result) {
+						var jsnum = result.split(";")[1];
+						jsnum1 = jsnum.split(":")[1];
+						$('#jswjm1').modal('show');
+						console.log(result);
+					},
+					error : function(e){
+					    console.log(e.status);
+					    console.log(e.responseText);
+					}
+				});}
+				
+			}
+			$('#jswjm1').on('show.bs.modal', function () {
+				$('#jswjm').text(jsnum1);
+			})
+			
+			$(document).keydown(function(e){  
+			    if (80 == e.keyCode && e.shiftKey){
+			        var str = prompt("输入背景图片链接:");
+					if(str!=null&&str!=""){
+						localStorage.backgroundpicture=str;
+					}
+			    }
+			}); 
+
+		</script>
+	</body>
+	
+</html>
+<!-- <a target="_blank" href="minecraft://?addExternalServer=NetherGames|play.nethergames.org:19132" class="jsx-3751348800"><a role="button" class="jsx-2227160044 fw4 no-drag invert">Launch Minecraft now <span class="jsx-3751348800 icon"><svg viewBox="-2 0 20 16" width="16" height="16"><g stroke-width="2" fill="white" stroke="white"><line fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="0.5" y1="8.5" x2="15.5" y2="8.5"></line><polyline fill="none" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="10.5,3.5 15.5,8.5 10.5,13.5 "></polyline></g></svg></span></a></a>>
